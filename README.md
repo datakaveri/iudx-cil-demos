@@ -1,27 +1,29 @@
-# React + TypeScript + Vite
+# KDMC AQM UI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Before starting the application, [ensure that you have Bun installed on your system.](https://bun.sh/docs/installation)
 
-Currently, two official plugins are available:
+## Installing dependencies
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+```zsh
+bun install
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Start the application
+
+```zsh
+bun run dev
+```
+
+Open <code>http://localhost:5173</code> to access the application.
+
+## Or, you can spawn up a docker container
+
+```zsh
+docker-compose up -d
+```
+
+## Build the application for deployment
+
+```zsh
+bun run build
+```

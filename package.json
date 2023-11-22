@@ -22,10 +22,12 @@
     "axios": "^1.6.0",
     "chroma-js": "^2.4.2",
     "dayjs": "^1.11.10",
+    "final-form": "^4.20.10",
     "lodash": "^4.17.21",
     "mapbox-gl": "^2.15.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-final-form": "^6.5.9",
     "react-map-gl": "^7.1.6",
     "react-redux": "^8.1.3"
   },

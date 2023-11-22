@@ -4,27 +4,33 @@ import TimesliderComponent from "./views/components/TimesliderComponent";
 import { DateTimePickerComponent } from "./views/components/DateTimePicker";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getAQMSpatialForecast,
-  getAQMSpatialForecastStatus,
+	getAQMSpatialForecast,
+	getAQMSpatialForecastStatus,
 } from "./store/timeSliderSlice/timeSliderSlice";
 import { useEffect } from "react";
 
 function App() {
-  const dispatch = useDispatch();
-  const responseDataStatus = useSelector(getAQMSpatialForecastStatus);
-  useEffect(() => {
-    if (responseDataStatus === "idle") dispatch(getAQMSpatialForecast());
-  }, [dispatch, responseDataStatus]);
-  return (
-    <>
-      <Container>
-        <DateTimePickerComponent />
-        <MapboxComponent />
-        <TimesliderComponent />
-      </Container>
-      {/* <CounterComponent /> */}
-    </>
-  );
+	const dispatch = useDispatch();
+	const responseDataStatus = useSelector(getAQMSpatialForecastStatus);
+	useEffect(() => {
+		if (responseDataStatus === "idle")
+			dispatch(
+				getAQMSpatialForecast({
+					startTime: "2023-11-01T18:30:00.000Z",
+					endTime: "2023-11-02T18:30:00.000Z",
+				})
+			);
+	}, [dispatch, responseDataStatus]);
+	return (
+		<>
+			<Container>
+				<DateTimePickerComponent />
+				<MapboxComponent />
+				<TimesliderComponent />
+			</Container>
+			{/* <CounterComponent /> */}
+		</>
+	);
 }
 
 export default App;
