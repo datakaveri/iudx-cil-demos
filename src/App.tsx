@@ -1,6 +1,6 @@
 import { Container } from "@mui/material";
 import MapboxComponent from "./views/components/MapboxComponent";
-import TimesliderComponent from "./views/components/TimesliderComponent";
+import TimesliderComponent from "./views/components/TimesliderComponent/TimesliderComponent";
 import { DateTimePickerComponent } from "./views/components/DateTimePicker";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -17,7 +17,7 @@ function App() {
 			dispatch(
 				getAQMSpatialForecast({
 					startTime: "2023-11-01T18:30:00.000Z",
-					endTime: "2023-11-02T18:30:00.000Z",
+					endTime: "2023-11-01T22:30:00.000Z",
 				})
 			);
 	}, [dispatch, responseDataStatus]);
@@ -28,7 +28,6 @@ function App() {
 				<MapboxComponent />
 				<TimesliderComponent />
 			</Container>
-			{/* <CounterComponent /> */}
 		</>
 	);
 }
