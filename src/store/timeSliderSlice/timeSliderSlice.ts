@@ -22,8 +22,20 @@ const initialState: TimeSliderState = {
 
 export const getAQMSpatialForecast: any = createAsyncThunk(
 	"airquality/aqmSpatialForecast",
-	async ({ startTime, endTime }: { startTime: string; endTime: string }) => {
-		const response = await aqmSpatialForecast({ startTime, endTime });
+	async ({
+		startTime,
+		endTime,
+		pollutant_val,
+	}: {
+		startTime: string;
+		endTime: string;
+		pollutant_val: string;
+	}) => {
+		const response = await aqmSpatialForecast({
+			startTime,
+			endTime,
+			pollutant_val,
+		});
 		return response;
 	}
 );

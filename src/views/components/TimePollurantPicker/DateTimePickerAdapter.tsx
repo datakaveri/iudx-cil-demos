@@ -6,7 +6,8 @@ const DateTimePickerAdapter = ({ input, meta, ...rest }) => {
 			{...input}
 			{...rest}
 			onAccept={(val) => {
-				input.onChange(new Date(val.$d).toISOString());
+				const d = new Date(val.$d);
+				input.onChange(d);
 			}}
 		/>
 	);

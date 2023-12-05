@@ -3,13 +3,13 @@ import "mapbox-gl/dist/mapbox-gl.css";
 
 import { getLayerProps } from "./getLayerProps";
 
-import { useAppSelector } from "../hooks/hooks";
-import { env } from "../../environments/environments";
+import { useAppSelector } from "../../hooks/hooks";
+import { env } from "../../../environments/environments";
 import { useSelector } from "react-redux";
 import {
 	getAQMSpatialForecastResponse,
 	getAQMSpatialForecastStatus,
-} from "../../store/timeSliderSlice/timeSliderSlice";
+} from "../../../store/timeSliderSlice/timeSliderSlice";
 
 const MapboxComponent = () => {
 	const responseData = useSelector(getAQMSpatialForecastResponse);
@@ -26,7 +26,7 @@ const MapboxComponent = () => {
 					latitude: 19.25657203930823,
 					zoom: 11.5,
 				}}
-				style={{ width: "100%", height: "90vh" }}
+				style={{ width: "100%", height: "70vh" }}
 				mapStyle="mapbox://styles/mapbox/light-v11"
 			>
 				{responseDataStatus === "succeeded" ? (

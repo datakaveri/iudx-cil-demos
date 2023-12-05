@@ -107,8 +107,6 @@ const TimesliderComponent = () => {
 						<Slider
 							onChange={handleSliderChange}
 							value={timeValue}
-							aria-label="Custom marks"
-							valueLabelDisplay="auto"
 							min={min}
 							max={max}
 						/>

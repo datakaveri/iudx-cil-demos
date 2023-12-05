@@ -2,11 +2,12 @@ import dayjs from "dayjs";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { Grid } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import DateTimePickerAdapter from "./DateTimePickerAdapter";
 import { Field, Form } from "react-final-form";
 import { useDispatch } from "react-redux";
-import { getAQMSpatialForecast } from "../../store/timeSliderSlice/timeSliderSlice";
+import { getAQMSpatialForecast } from "../../../store/timeSliderSlice/timeSliderSlice";
+import PollutantSelectComponent from "./PollutantSelectComponent";
 
 export const DateTimePickerComponent = () => {
 	const dispatch = useDispatch();
@@ -14,14 +15,17 @@ export const DateTimePickerComponent = () => {
 	const onSubmit = ({
 		startTime,
 		endTime,
+		pollutant_val,
 	}: {
 		startTime: string;
 		endTime: string;
+		pollutant_val: string;
 	}) => {
 		dispatch(
 			getAQMSpatialForecast({
 				startTime,
 				endTime,
+				pollutant_val,
 			})
 		);
 	};
@@ -30,7 +34,6 @@ export const DateTimePickerComponent = () => {
 		<div>
 			<Form
 				onSubmit={onSubmit}
-				// validate={validate}
 				render={({ handleSubmit }) => (
 					<form onSubmit={handleSubmit}>
 						<LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -77,13 +80,22 @@ export const DateTimePickerComponent = () => {
 									</Grid>
 
 									<Grid item xs={3}>
-										{/* <DemoItem label="Pollutant">
-											<PollutantSelectComponent />
-										</DemoItem> */}
+										<Field
+											defaultValue="co2"
+											name="pollutant_val"
+											label="Pollutant"
+											component={PollutantSelectComponent}
+										/>
 									</Grid>
 
 									<Grid item xs={3}>
-										<button type="submit">Submit</button>
+										<Button
+											type="submit"
+											variant="contained"
+											color="success"
+										>
+											Submit
+										</Button>
 									</Grid>
 								</Grid>
 							</DemoContainer>
