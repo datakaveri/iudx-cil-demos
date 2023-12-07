@@ -12,10 +12,24 @@ import {
 } from "../../../store/timeSliderSlice/timeSliderSlice";
 
 const MapboxComponent = () => {
+	// const [hoverInfo, setHoverInfo] = useState(null);
+
 	const responseData = useSelector(getAQMSpatialForecastResponse);
 	const responseDataStatus = useSelector(getAQMSpatialForecastStatus);
 
 	const timeValue = useAppSelector((state) => state.timeSlider.value);
+
+	// const onClick = useCallback((event) => {
+	// 	const {
+	// 		features,
+	// 		point: { x, y },
+	// 	} = event;
+	// 	const hoveredFeature = features && features[0];
+	// 	console.log(event);
+
+	// 	// prettier-ignore
+	// 	setHoverInfo(hoveredFeature && {feature: hoveredFeature, x, y});
+	// }, []);
 
 	return (
 		<>
@@ -37,7 +51,7 @@ const MapboxComponent = () => {
 								id={valuesIndex.toString()}
 								type="geojson"
 								data={
-									responseData.timeseries.geojson[0][
+									responseData.timeseries.geojson[timeValue][
 										valuesIndex
 									]
 								}
@@ -46,16 +60,8 @@ const MapboxComponent = () => {
 									id={valuesIndex.toString()}
 									{...getLayerProps({
 										pollutantVal: value,
-										min: Math.min(
-											...responseData.timeseries.values[
-												timeValue
-											]
-										),
-										max: Math.max(
-											...responseData.timeseries.values[
-												timeValue
-											]
-										),
+										min: responseData.properties.min,
+										max: responseData.properties.max,
 									})}
 								/>
 							</Source>
@@ -64,6 +70,14 @@ const MapboxComponent = () => {
 				) : (
 					<p>loading...</p>
 				)}
+				{/* {hoverInfo && (
+					<div
+						className="tooltip"
+						style={{ left: hoverInfo.x, top: hoverInfo.y }}
+					>
+						<div>State: {hoverInfo.feature.properties.value}</div>
+					</div>
+				)} */}
 			</Map>
 		</>
 	);

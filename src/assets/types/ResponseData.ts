@@ -8,5 +8,7 @@ export interface ResponseData {
 	};
 	properties: {
 		measuredValue: string;
+		min: number;
+		max: number;
 	};
 }
