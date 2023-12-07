@@ -10,5 +10,7 @@ export interface ResponseData {
 		measuredValue: string;
 		min: number;
 		max: number;
+		average: number;
+		stddev: number;
 	};
 }

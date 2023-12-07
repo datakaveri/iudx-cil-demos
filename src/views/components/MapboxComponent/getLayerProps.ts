@@ -6,10 +6,26 @@ interface Props {
 	pollutantVal: number;
 	min: number;
 	max: number;
+	average: number;
+	stddev: number;
 }
 
-export const getLayerProps = ({ pollutantVal, min, max }: Props) => {
-	const scale = chroma.scale(["yellow", "red"]).domain([min, max]);
+export const getLayerProps = ({
+	pollutantVal,
+	min,
+	max,
+	average,
+	stddev,
+}: Props) => {
+	const scale = chroma
+		.scale(["orange", "red"])
+		.classes([
+			min,
+			average - 2 * stddev,
+			average,
+			average + 2 * stddev,
+			max,
+		]);
 
 	const layerStyle: LayerProps = {
 		type: "fill",

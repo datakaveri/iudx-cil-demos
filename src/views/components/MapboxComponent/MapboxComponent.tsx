@@ -62,6 +62,9 @@ const MapboxComponent = () => {
 										pollutantVal: value,
 										min: responseData.properties.min,
 										max: responseData.properties.max,
+										average:
+											responseData.properties.average,
+										stddev: responseData.properties.stddev,
 									})}
 								/>
 							</Source>
