@@ -8,6 +8,7 @@ import { Field, Form } from "react-final-form";
 import { useDispatch } from "react-redux";
 import { getAQMSpatialForecast } from "../../../store/timeSliderSlice/timeSliderSlice";
 import PollutantSelectComponent from "./PollutantSelectComponent";
+import { setSnackbarStatus } from "../../../store/snackbarSlice/snackbarSlice";
 
 export const DateTimePickerComponent = () => {
 	const dispatch = useDispatch();
@@ -21,13 +22,30 @@ export const DateTimePickerComponent = () => {
 		endTime: string;
 		pollutant_val: string;
 	}) => {
-		dispatch(
-			getAQMSpatialForecast({
-				startTime,
-				endTime,
-				pollutant_val,
-			})
-		);
+		if (+startTime > +endTime) {
+			dispatch(
+				setSnackbarStatus({
+					open: true,
+					snackbarMessage: "Invalid time range",
+					snackbarType: "error",
+				})
+			);
+		} else {
+			dispatch(
+				getAQMSpatialForecast({
+					startTime,
+					endTime,
+					pollutant_val,
+				})
+			);
+			dispatch(
+				setSnackbarStatus({
+					open: true,
+					snackbarMessage: "Data loaded successfully",
+					snackbarType: "success",
+				})
+			);
+		}
 	};
 
 	return (

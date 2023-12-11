@@ -1,0 +1,31 @@
+.mapboxLegend {
+	position: absolute;
+	z-index: 4;
+	padding: 20px;
+	margin: 20px;
+	width: 170px;
+	height: 90px;
+	background-color: white;
+	opacity: 0.5;
+
+	ul {
+		padding: 0px;
+		margin: 0px;
+
+		.legendElement {
+			display: flex;
+			flex-direction: row;
+			.legendColor {
+				margin: 5px;
+				width: 10px;
+				height: 10px;
+				outline: 1px solid black;
+			}
+
+			.legendText {
+				margin-left: 10px;
+				list-style: none;
+			}
+		}
+	}
+}

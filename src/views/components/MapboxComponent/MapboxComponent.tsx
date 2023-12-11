@@ -11,78 +11,78 @@ import {
 	getAQMSpatialForecastStatus,
 } from "../../../store/timeSliderSlice/timeSliderSlice";
 
-const MapboxComponent = () => {
-	// const [hoverInfo, setHoverInfo] = useState(null);
+import "./styles.scss";
+import MapboxLegend from "./MapboxLegend";
+import { CircularProgress } from "@mui/material";
 
+const MapboxComponent = () => {
 	const responseData = useSelector(getAQMSpatialForecastResponse);
 	const responseDataStatus = useSelector(getAQMSpatialForecastStatus);
 
 	const timeValue = useAppSelector((state) => state.timeSlider.value);
 
-	// const onClick = useCallback((event) => {
-	// 	const {
-	// 		features,
-	// 		point: { x, y },
-	// 	} = event;
-	// 	const hoveredFeature = features && features[0];
-	// 	console.log(event);
+	let chromaJsLegendColors: number[] = [];
 
-	// 	// prettier-ignore
-	// 	setHoverInfo(hoveredFeature && {feature: hoveredFeature, x, y});
-	// }, []);
+	if (responseDataStatus === "succeeded") {
+		chromaJsLegendColors = [
+			responseData.properties.min,
+			responseData.properties.average -
+				2 * responseData.properties.stddev,
+			responseData.properties.average,
+			responseData.properties.average +
+				2 * responseData.properties.stddev,
+			responseData.properties.max,
+		];
+	}
 
 	return (
-		<>
-			<Map
-				mapboxAccessToken={env.MAPBOX_API_TOKEN}
-				initialViewState={{
-					longitude: 73.11506788088832,
-					latitude: 19.25657203930823,
-					zoom: 11.5,
-				}}
-				style={{ width: "100%", height: "70vh" }}
-				mapStyle="mapbox://styles/mapbox/light-v11"
-			>
-				{responseDataStatus === "succeeded" ? (
-					responseData.timeseries.values[timeValue].map(
-						(value, valuesIndex) => (
-							<Source
-								key={valuesIndex}
-								id={valuesIndex.toString()}
-								type="geojson"
-								data={
-									responseData.timeseries.geojson[timeValue][
-										valuesIndex
-									]
-								}
-							>
-								<Layer
-									id={valuesIndex.toString()}
-									{...getLayerProps({
-										pollutantVal: value,
-										min: responseData.properties.min,
-										max: responseData.properties.max,
-										average:
-											responseData.properties.average,
-										stddev: responseData.properties.stddev,
-									})}
-								/>
-							</Source>
-						)
-					)
-				) : (
-					<p>loading...</p>
-				)}
-				{/* {hoverInfo && (
-					<div
-						className="tooltip"
-						style={{ left: hoverInfo.x, top: hoverInfo.y }}
+		<div>
+			{responseDataStatus === "succeeded" ? (
+				<div>
+					<MapboxLegend chromaJsLegendColors={chromaJsLegendColors} />
+					<Map
+						mapboxAccessToken={env.MAPBOX_API_TOKEN}
+						initialViewState={{
+							longitude: 73.11506788088832,
+							latitude: 19.25657203930823,
+							zoom: 11.5,
+						}}
+						style={{ width: "100%", height: "70vh" }}
+						mapStyle="mapbox://styles/mapbox/light-v11"
 					>
-						<div>State: {hoverInfo.feature.properties.value}</div>
-					</div>
-				)} */}
-			</Map>
-		</>
+						{responseData.timeseries.values[timeValue].map(
+							(value, valuesIndex) => (
+								<Source
+									key={valuesIndex}
+									id={valuesIndex.toString()}
+									type="geojson"
+									data={
+										responseData.timeseries.geojson[
+											timeValue
+										][valuesIndex]
+									}
+								>
+									<Layer
+										id={valuesIndex.toString()}
+										{...getLayerProps({
+											pollutantVal: value,
+											min: responseData.properties.min,
+											max: responseData.properties.max,
+											average:
+												responseData.properties.average,
+											stddev: responseData.properties
+												.stddev,
+										})}
+									/>
+								</Source>
+							)
+						)}
+					</Map>
+				</div>
+			) : (
+				<CircularProgress />
+			)}
+		</div>
 	);
 };
 

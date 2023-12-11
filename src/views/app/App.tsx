@@ -8,6 +8,7 @@ import {
 	getAQMSpatialForecastStatus,
 } from "../../store/timeSliderSlice/timeSliderSlice";
 import { useEffect } from "react";
+import SnackbarComponent from "../components/SnackbarComponent/SnackbarComponent";
 
 function App() {
 	const dispatch = useDispatch();
@@ -34,6 +35,7 @@ function App() {
 				<DateTimePickerComponent />
 				<MapboxComponent />
 				<TimesliderComponent />
+				<SnackbarComponent />
 			</Container>
 		</>
 	);

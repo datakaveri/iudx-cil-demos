@@ -40,7 +40,7 @@ const TimesliderComponent = () => {
 			intervalId = setInterval(() => {
 				const newValue = timeValue + 1;
 				dispatch(setTimeValue(newValue));
-			}, 250);
+			}, 1000);
 		} else if (timeValue >= max) {
 			dispatch(setPlayingStatus(false));
 		}

@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import timeSliderReducer from "./timeSliderSlice/timeSliderSlice";
+import snackbarReducer from "./snackbarSlice/snackbarSlice";
 
 export const store = configureStore({
-  reducer: {
-    timeSlider: timeSliderReducer,
-  },
+	reducer: {
+		timeSlider: timeSliderReducer,
+		snackbar: snackbarReducer,
+	},
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

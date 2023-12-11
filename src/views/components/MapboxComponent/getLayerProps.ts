@@ -1,5 +1,4 @@
 import { LayerProps } from "react-map-gl";
-// import data from "./data.json";
 import chroma from "chroma-js";
 
 interface Props {
@@ -18,7 +17,7 @@ export const getLayerProps = ({
 	stddev,
 }: Props) => {
 	const scale = chroma
-		.scale(["orange", "red"])
+		.scale(["green", "red"])
 		.classes([
 			min,
 			average - 2 * stddev,
@@ -39,4 +38,10 @@ export const getLayerProps = ({
 	};
 
 	return layerStyle;
+};
+
+export const getLegendColor = (colorScale: number[], pollutantVal: number) => {
+	const scale = chroma.scale(["green", "red"]).classes(colorScale);
+
+	return scale(pollutantVal).hex();
 };
