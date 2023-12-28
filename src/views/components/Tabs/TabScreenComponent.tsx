@@ -20,8 +20,8 @@ const TabScreenComponent = ({ path }: Props) => {
 		if (responseDataStatus === "idle")
 			dispatch(
 				getAQMSpatialForecast({
-					startTime: "2023-11-01T18:30:00.000Z",
-					endTime: "2023-11-01T22:30:00.000Z",
+					startTime: "2023-12-26T10:14:26+05:30",
+					endTime: "2023-12-26T10:30:26+05:30",
 					pollutant_val: "co2",
 					path: path,
 				})
