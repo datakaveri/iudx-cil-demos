@@ -49,6 +49,10 @@ const MapboxComponent = () => {
 						}}
 						style={{ width: "100%", height: "70vh" }}
 						mapStyle="mapbox://styles/mapbox/light-v11"
+						interactiveLayerIds={["data"]}
+						onClick={(evt) => {
+							console.log(evt);
+						}}
 					>
 						{responseData.timeseries.values[timeValue].map(
 							(value, valuesIndex) => (

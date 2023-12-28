@@ -26,15 +26,18 @@ export const getAQMSpatialForecast: any = createAsyncThunk(
 		startTime,
 		endTime,
 		pollutant_val,
+		path,
 	}: {
 		startTime: string;
 		endTime: string;
 		pollutant_val: string;
+		path: string;
 	}) => {
 		const response = await aqmSpatialForecast({
 			startTime,
 			endTime,
 			pollutant_val,
+			path,
 		});
 		return response;
 	}

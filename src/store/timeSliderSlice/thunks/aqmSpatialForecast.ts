@@ -5,10 +5,12 @@ export const aqmSpatialForecast = async ({
 	startTime,
 	endTime,
 	pollutant_val,
+	path,
 }: {
 	startTime: string;
 	endTime: string;
 	pollutant_val: string;
+	path: string;
 }) => {
 	const headers = {
 		"Access-Control-Allow-Origin": "*",
@@ -23,17 +25,33 @@ export const aqmSpatialForecast = async ({
 	et.setHours(et.getHours() + 5);
 	et.setMinutes(et.getMinutes() + 30);
 
-	const requestBody = {
-		forecastStart: startTime,
-		forecastEnd: endTime,
-		measuredValue: pollutant_val,
-	};
-	const res = await axios({
-		url: `${env.endpoint}airquality/aqmSpatialForecast`,
-		method: "post",
-		data: requestBody,
-		headers: headers,
-	});
+	let res;
+
+	if (path === "spatialInterpolation") {
+		const requestBody = {
+			start: startTime,
+			end: endTime,
+			measuredValue: pollutant_val,
+		};
+		res = await axios({
+			url: `${env.endpoint}airquality/${path}`,
+			method: "post",
+			data: requestBody,
+			headers: headers,
+		});
+	} else if (path === "spatialForecast") {
+		const requestBody = {
+			forecastStart: startTime,
+			forecastEnd: endTime,
+			measuredValue: pollutant_val,
+		};
+		res = await axios({
+			url: `${env.endpoint}airquality/${path}`,
+			method: "post",
+			data: requestBody,
+			headers: headers,
+		});
+	}
 
 	return res.data;
 };

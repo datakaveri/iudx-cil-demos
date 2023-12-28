@@ -1,28 +1,18 @@
-import { Container, Typography } from "@mui/material";
-import MapboxComponent from "../components/MapboxComponent/MapboxComponent";
-import TimesliderComponent from "../components/TimesliderComponent/TimesliderComponent";
-import { DateTimePickerComponent } from "../components/TimePollurantPicker/DateTimePicker";
-import { useDispatch, useSelector } from "react-redux";
-import {
-	getAQMSpatialForecast,
-	getAQMSpatialForecastStatus,
-} from "../../store/timeSliderSlice/timeSliderSlice";
-import { useEffect } from "react";
-import SnackbarComponent from "../components/SnackbarComponent/SnackbarComponent";
+import { Box, Container, Tab, Tabs, Typography } from "@mui/material";
+
+import { useState } from "react";
+import TabPanel from "../components/Tabs/TabPanel";
+import TabScreenComponent from "../components/Tabs/TabScreenComponent";
+
+const tabs = ["spatial Interpolation", "spatial Forecast"];
 
 function App() {
-	const dispatch = useDispatch();
-	const responseDataStatus = useSelector(getAQMSpatialForecastStatus);
-	useEffect(() => {
-		if (responseDataStatus === "idle")
-			dispatch(
-				getAQMSpatialForecast({
-					startTime: "2023-11-01T18:30:00.000Z",
-					endTime: "2023-11-01T22:30:00.000Z",
-					pollutant_val: "co2",
-				})
-			);
-	}, [dispatch, responseDataStatus]);
+	const [value, setValue] = useState(0);
+
+	const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+		setValue(newValue);
+	};
+
 	return (
 		<>
 			<Container>
@@ -32,10 +22,26 @@ function App() {
 				<Typography variant="h5">
 					Select start time, end time and pollutant
 				</Typography>
-				<DateTimePickerComponent />
-				<MapboxComponent />
-				<TimesliderComponent />
-				<SnackbarComponent />
+				<Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+					<Tabs
+						value={value}
+						onChange={handleChange}
+						aria-label="basic tabs example"
+					>
+						{tabs.map((tab, index) => (
+							<Tab
+								key={index}
+								label={`${tab}`}
+								id={index.toString()}
+							/>
+						))}
+					</Tabs>
+					{tabs.map((tab, index) => (
+						<TabPanel key={index} value={value} index={index}>
+							<TabScreenComponent path={tab.replace(" ", "")} />
+						</TabPanel>
+					))}
+				</Box>
 			</Container>
 		</>
 	);
