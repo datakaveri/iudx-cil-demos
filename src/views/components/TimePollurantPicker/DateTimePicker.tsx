@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { getAQMSpatialForecast } from "../../../store/timeSliderSlice/timeSliderSlice";
 import PollutantSelectComponent from "./PollutantSelectComponent";
 import { setSnackbarStatus } from "../../../store/snackbarSlice/snackbarSlice";
+import moment from "moment";
 
 interface Props {
 	path: string;
@@ -35,10 +36,16 @@ export const DateTimePickerComponent = ({ path }: Props) => {
 				})
 			);
 		} else {
+			const st = moment(startTime).format().toString();
+			const et = moment(endTime).format().toString();
+			console.log({
+				st,
+				et,
+			});
 			dispatch(
 				getAQMSpatialForecast({
-					startTime,
-					endTime,
+					startTime: st,
+					endTime: et,
 					pollutant_val,
 					path,
 				})
