@@ -10,7 +10,11 @@ import { getAQMSpatialForecast } from "../../../store/timeSliderSlice/timeSlider
 import PollutantSelectComponent from "./PollutantSelectComponent";
 import { setSnackbarStatus } from "../../../store/snackbarSlice/snackbarSlice";
 
-export const DateTimePickerComponent = () => {
+interface Props {
+	path: string;
+}
+
+export const DateTimePickerComponent = ({ path }: Props) => {
 	const dispatch = useDispatch();
 
 	const onSubmit = ({
@@ -36,6 +40,7 @@ export const DateTimePickerComponent = () => {
 					startTime,
 					endTime,
 					pollutant_val,
+					path,
 				})
 			);
 			dispatch(
@@ -66,15 +71,24 @@ export const DateTimePickerComponent = () => {
 								<Grid container spacing={2}>
 									<Grid item xs={3}>
 										<Field
-											minDate={dayjs(
-												"2023-11-01 00:00:00.000"
-											)}
-											maxDate={dayjs(
-												"2023-11-07 23:45:00.000"
-											)}
-											defaultValue={dayjs(
-												"2023-11-01 00:00:00.000"
-											)}
+											minDate={
+												path === "spatialInterpolation"
+													? dayjs(
+															"2024-01-03 09:00:00.000"
+													  )
+													: dayjs(
+															"2023-12-26 22:00:00.000"
+													  )
+											}
+											defaultValue={
+												path === "spatialInterpolation"
+													? dayjs(
+															"2024-01-03 10:00:00.000"
+													  )
+													: dayjs(
+															"2023-12-27 00:00:00.000"
+													  )
+											}
 											name="startTime"
 											label="Start time"
 											component={DateTimePickerAdapter}
@@ -82,15 +96,24 @@ export const DateTimePickerComponent = () => {
 									</Grid>
 									<Grid item xs={3}>
 										<Field
-											minDate={dayjs(
-												"2023-11-01 00:00:00.000"
-											)}
-											maxDate={dayjs(
-												"2023-11-07 23:45:00.000"
-											)}
-											defaultValue={dayjs(
-												"2023-11-07 23:45:00.000"
-											)}
+											minDate={
+												path === "spatialInterpolation"
+													? dayjs(
+															"2023-01-03 09:00:00.000"
+													  )
+													: dayjs(
+															"2023-12-26 22:00:00.000"
+													  )
+											}
+											defaultValue={
+												path === "spatialInterpolation"
+													? dayjs(
+															"2024-01-03 11:00:00.000"
+													  )
+													: dayjs(
+															"2023-12-27 02:00:00.000"
+													  )
+											}
 											name="endTime"
 											label="End time"
 											component={DateTimePickerAdapter}

@@ -70,10 +70,16 @@ const TimesliderComponent = () => {
 	};
 
 	const handleForwardClick = () => {
+		if (timeValue >= max) {
+			return;
+		}
 		dispatch(setTimeValue(timeValue + 1));
 	};
 
 	const handleBackwardClick = () => {
+		if (timeValue <= min) {
+			return;
+		}
 		dispatch(setTimeValue(timeValue - 1));
 	};
 
