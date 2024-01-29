@@ -13,7 +13,6 @@ import {
 
 import "./styles.scss";
 import MapboxLegend from "./MapboxLegend";
-import { CircularProgress } from "@mui/material";
 
 const MapboxComponent = () => {
 	const responseData = useSelector(getAQMSpatialForecastResponse);
@@ -27,65 +26,60 @@ const MapboxComponent = () => {
 		chromaJsLegendColors = [
 			responseData.properties.min,
 			responseData.properties.average -
-				2 * responseData.properties.stddev,
+				0.625 * responseData.properties.stddev,
 			responseData.properties.average,
 			responseData.properties.average +
-				2 * responseData.properties.stddev,
+				0.625 * responseData.properties.stddev,
 			responseData.properties.max,
 		];
 	}
 
 	return (
 		<div>
-			{responseDataStatus === "succeeded" ? (
-				<div>
-					<MapboxLegend chromaJsLegendColors={chromaJsLegendColors} />
-					<Map
-						mapboxAccessToken={env.MAPBOX_API_TOKEN}
-						initialViewState={{
-							longitude: 73.11506788088832,
-							latitude: 19.25657203930823,
-							zoom: 11.5,
-						}}
-						style={{ width: "100%", height: "70vh" }}
-						mapStyle="mapbox://styles/mapbox/light-v11"
-						interactiveLayerIds={["data"]}
-						onClick={(evt) => {
-							console.log(evt);
-						}}
-					>
-						{responseData.timeseries.values[timeValue].map(
-							(value, valuesIndex) => (
-								<Source
-									key={valuesIndex}
+			<div>
+				<MapboxLegend chromaJsLegendColors={chromaJsLegendColors} />
+				<Map
+					mapboxAccessToken={env.MAPBOX_API_TOKEN}
+					initialViewState={{
+						longitude: 73.11506788088832,
+						latitude: 19.25657203930823,
+						zoom: 11.5,
+					}}
+					style={{ width: "100%", height: "70vh" }}
+					mapStyle="mapbox://styles/mapbox/light-v11"
+					interactiveLayerIds={["data"]}
+					onClick={(evt) => {
+						console.log(evt);
+					}}
+				>
+					{responseData.timeseries.values[timeValue].map(
+						(value, valuesIndex) => (
+							<Source
+								key={valuesIndex}
+								id={valuesIndex.toString()}
+								type="geojson"
+								data={
+									responseData.timeseries.geojson[timeValue][
+										valuesIndex
+									]
+								}
+							>
+								<Layer
 									id={valuesIndex.toString()}
-									type="geojson"
-									data={
-										responseData.timeseries.geojson[
-											timeValue
-										][valuesIndex]
-									}
-								>
-									<Layer
-										id={valuesIndex.toString()}
-										{...getLayerProps({
-											pollutantVal: value,
-											min: responseData.properties.min,
-											max: responseData.properties.max,
-											average:
-												responseData.properties.average,
-											stddev: responseData.properties
-												.stddev,
-										})}
-									/>
-								</Source>
-							)
-						)}
-					</Map>
-				</div>
-			) : (
-				<CircularProgress />
-			)}
+									{...getLayerProps({
+										pollutantVal: value,
+										min: responseData.properties.min,
+										max: responseData.properties.max,
+										average:
+											responseData.properties.average,
+										stddev: responseData.properties.stddev,
+									})}
+								/>
+							</Source>
+						)
+					)}
+				</Map>
+			</div>
 		</div>
 	);
 };

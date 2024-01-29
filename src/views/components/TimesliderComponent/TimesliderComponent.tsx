@@ -85,53 +85,47 @@ const TimesliderComponent = () => {
 
 	return (
 		<div>
-			{responseDataStatus === "succeeded" ? (
-				<Grid container spacing={2}>
-					<Grid item xs={3}>
-						<div className="controlPanel">
-							<button onClick={handleBackwardClick}>
-								<RewindIcon />
+			<Grid container spacing={2}>
+				<Grid item xs={3}>
+					<div className="controlPanel">
+						<button onClick={handleBackwardClick}>
+							<RewindIcon />
+						</button>
+						{playingStatus ? (
+							<button onClick={handlePauseClick}>
+								<PauseIcon />
 							</button>
-							{playingStatus ? (
-								<button onClick={handlePauseClick}>
-									<PauseIcon />
-								</button>
-							) : (
-								<button onClick={handlePlayClick}>
-									<PlayArrowIcon />
-								</button>
-							)}
-							<button onClick={handleRestartClick}>
-								<RestartIcon />
+						) : (
+							<button onClick={handlePlayClick}>
+								<PlayArrowIcon />
 							</button>
-							<button onClick={handleForwardClick}>
-								<ForwardIcon />
-							</button>
-						</div>
-					</Grid>
-					<Grid item xs={6}>
-						<Slider
-							onChange={handleSliderChange}
-							value={timeValue}
-							min={min}
-							max={max}
-						/>
-					</Grid>
-					<Grid item xs={3}>
-						<div className="timeValue">
-							<span>
-								{new Date(
-									responseData.timeseries.timestamps[
-										timeValue
-									]
-								).toLocaleString("en-IN")}
-							</span>
-						</div>
-					</Grid>
+						)}
+						<button onClick={handleRestartClick}>
+							<RestartIcon />
+						</button>
+						<button onClick={handleForwardClick}>
+							<ForwardIcon />
+						</button>
+					</div>
 				</Grid>
-			) : (
-				<span>loading...</span>
-			)}
+				<Grid item xs={6}>
+					<Slider
+						onChange={handleSliderChange}
+						value={timeValue}
+						min={min}
+						max={max}
+					/>
+				</Grid>
+				<Grid item xs={3}>
+					<div className="timeValue">
+						<span>
+							{new Date(
+								responseData.timeseries.timestamps[timeValue]
+							).toLocaleString("en-IN")}
+						</span>
+					</div>
+				</Grid>
+			</Grid>
 		</div>
 	);
 };

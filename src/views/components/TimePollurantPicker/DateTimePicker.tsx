@@ -5,8 +5,11 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { Button, Grid } from "@mui/material";
 import DateTimePickerAdapter from "./DateTimePickerAdapter";
 import { Field, Form } from "react-final-form";
-import { useDispatch } from "react-redux";
-import { getAQMSpatialForecast } from "../../../store/timeSliderSlice/timeSliderSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+	getAQMSpatialForecast,
+	getAQMSpatialForecastStatus,
+} from "../../../store/timeSliderSlice/timeSliderSlice";
 import PollutantSelectComponent from "./PollutantSelectComponent";
 import { setSnackbarStatus } from "../../../store/snackbarSlice/snackbarSlice";
 import moment from "moment";
@@ -17,6 +20,7 @@ interface Props {
 
 export const DateTimePickerComponent = ({ path }: Props) => {
 	const dispatch = useDispatch();
+	const responseDataStatus = useSelector(getAQMSpatialForecastStatus);
 
 	const onSubmit = ({
 		startTime,
@@ -50,13 +54,25 @@ export const DateTimePickerComponent = ({ path }: Props) => {
 					path,
 				})
 			);
-			dispatch(
-				setSnackbarStatus({
-					open: true,
-					snackbarMessage: "Data loaded successfully",
-					snackbarType: "success",
-				})
-			);
+
+			if (responseDataStatus === "succeeded") {
+				dispatch(
+					setSnackbarStatus({
+						open: true,
+						snackbarMessage: "Data loaded successfully",
+						snackbarType: "success",
+					})
+				);
+			} else if (responseDataStatus === "failed") {
+				dispatch(
+					setSnackbarStatus({
+						open: true,
+						snackbarMessage:
+							"No data present in the specified time range :/",
+						snackbarType: "error",
+					})
+				);
+			}
 		}
 	};
 

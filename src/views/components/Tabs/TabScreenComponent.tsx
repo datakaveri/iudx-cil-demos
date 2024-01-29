@@ -2,9 +2,14 @@ import { DateTimePickerComponent } from "../TimePollurantPicker/DateTimePicker";
 import MapboxComponent from "../MapboxComponent/MapboxComponent";
 import TimesliderComponent from "../TimesliderComponent/TimesliderComponent";
 import SnackbarComponent from "../SnackbarComponent/SnackbarComponent";
-import { useDispatch } from "react-redux";
-import { getAQMSpatialForecast } from "../../../store/timeSliderSlice/timeSliderSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+	getAQMSpatialForecast,
+	getAQMSpatialForecastStatus,
+} from "../../../store/timeSliderSlice/timeSliderSlice";
 import { useEffect } from "react";
+import { CircularProgress } from "@mui/material";
+import NoDataComponent from "./NoDataComponent";
 
 interface Props {
 	path: string;
@@ -12,6 +17,8 @@ interface Props {
 
 const TabScreenComponent = ({ path }: Props) => {
 	const dispatch = useDispatch();
+	const responseDataStatus = useSelector(getAQMSpatialForecastStatus);
+
 	useEffect(() => {
 		if (path === "spatialInterpolation") {
 			dispatch(
@@ -37,8 +44,16 @@ const TabScreenComponent = ({ path }: Props) => {
 	return (
 		<>
 			<DateTimePickerComponent path={path} />
-			<MapboxComponent />
-			<TimesliderComponent />
+			{responseDataStatus === "succeeded" ? (
+				<>
+					<MapboxComponent />
+					<TimesliderComponent />
+				</>
+			) : responseDataStatus === "failed" ? (
+				<NoDataComponent />
+			) : (
+				<CircularProgress />
+			)}
 			<SnackbarComponent />
 		</>
 	);

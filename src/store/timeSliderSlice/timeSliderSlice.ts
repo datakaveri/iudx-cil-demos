@@ -57,8 +57,14 @@ export const timeSliderSlice = createSlice({
 	extraReducers: (builder) => {
 		builder
 			.addCase(getAQMSpatialForecast.fulfilled, (state, action) => {
-				state.loading = "succeeded";
 				state.responseData = action.payload;
+				if (state.responseData.timeseries.timestamps !== null) {
+					console.log("load passed");
+					state.loading = "succeeded";
+				} else {
+					console.log("load failed");
+					state.loading = "failed";
+				}
 			})
 			.addCase(getAQMSpatialForecast.pending, (state, action) => {
 				state.loading = "pending";

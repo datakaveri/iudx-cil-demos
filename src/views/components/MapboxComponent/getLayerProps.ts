@@ -20,9 +20,9 @@ export const getLayerProps = ({
 		.scale(["green", "red"])
 		.classes([
 			min,
-			average - 2 * stddev,
+			average - 0.625 * stddev,
 			average,
-			average + 2 * stddev,
+			average + 0.625 * stddev,
 			max,
 		]);
 
