@@ -97,19 +97,19 @@ export const DateTimePickerComponent = ({ path }: Props) => {
 											minDate={
 												path === "spatialInterpolation"
 													? dayjs(
-															"2024-01-03 09:00:00.000"
+															"2024-04-18 06:00:00.000"
 													  )
 													: dayjs(
-															"2023-12-26 22:00:00.000"
+															"2024-04-18 16:00:00.000"
 													  )
 											}
 											defaultValue={
 												path === "spatialInterpolation"
 													? dayjs(
-															"2024-01-03 10:00:00.000"
+															"2024-04-18 06:00:00.000"
 													  )
 													: dayjs(
-															"2023-12-27 00:00:00.000"
+															"2024-04-18 16:00:00.000"
 													  )
 											}
 											name="startTime"
@@ -122,19 +122,19 @@ export const DateTimePickerComponent = ({ path }: Props) => {
 											minDate={
 												path === "spatialInterpolation"
 													? dayjs(
-															"2023-01-03 09:00:00.000"
+															"2024-04-18 06:00:00.000"
 													  )
 													: dayjs(
-															"2023-12-26 22:00:00.000"
+															"2024-04-18 16:00:00.000"
 													  )
 											}
 											defaultValue={
 												path === "spatialInterpolation"
 													? dayjs(
-															"2024-01-03 11:00:00.000"
+															"2024-04-18 06:00:00.000"
 													  )
 													: dayjs(
-															"2023-12-27 02:00:00.000"
+															"2024-04-18 16:00:00.000"
 													  )
 											}
 											name="endTime"

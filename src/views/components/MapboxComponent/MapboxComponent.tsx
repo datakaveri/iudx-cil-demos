@@ -33,16 +33,15 @@ const MapboxComponent = () => {
 			responseData.properties.max,
 		];
 	}
-
-	return (
+ 	return (
 		<div>
 			<div>
 				<MapboxLegend chromaJsLegendColors={chromaJsLegendColors} />
 				<Map
 					mapboxAccessToken={env.MAPBOX_API_TOKEN}
 					initialViewState={{
-						longitude: 73.11506788088832,
-						latitude: 19.25657203930823,
+						longitude: 73.78630791298927,
+						latitude: 18.63077282654259,
 						zoom: 11.5,
 					}}
 					style={{ width: "100%", height: "70vh" }}

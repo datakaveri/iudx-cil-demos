@@ -17,7 +17,7 @@ function App() {
 		<>
 			<Container>
 				<Typography variant="h4">
-					KDMC Air Quality Monitoring
+					Pimpri-Chinchwad Air Quality Monitoring
 				</Typography>
 				<Typography variant="h5">
 					Select start time, end time and pollutant
